@@ -9,6 +9,7 @@ body {
   font-weight: 300;
   font-size: 16px;
   font-family: 'Londrina Solid', sans-serif;
+  user-select: none;
 }
 
 main {
@@ -20,7 +21,29 @@ main {
   overflow: hidden;
   box-shadow: 0 0 0 6px #000;
   background: url(../img/battleground.jpg) no-repeat bottom;
-  background-size: cover;
+  backgrou-dnd-size: cover;
+}
+
+/* HITPOINT CHANGE */
+
+.hitpoint-change {
+  width: 100%;
+  text-align: center;
+  font-size: 3em;
+  animation: floatAndFade 3s forwards;
+  text-shadow: 0 0 10px #000;
+}
+
+.hitpoint-change.is-adding {
+  color: #1CE50C;
+}
+
+.hitpoint-change.is-subtracting {
+  color: #FF003A;
+}
+
+.battleground_left .hitpoint-change {
+  transform: scaleX(-1);
 }
 
 /* NARRATION */
@@ -41,7 +64,7 @@ main {
   font-size: 1.75em;
   margin-top: .125em;
   color: #FFF;
-  background-color: #555;
+  background-color: #0D910D;
   border-radius: 10px;
 }
 
@@ -81,6 +104,7 @@ main {
   display: flex;
   flex: 1 1 50%;
   align-items: center;
+  height: 100%;
   border-radius: 6px;
 }
 
@@ -134,13 +158,27 @@ main {
   display: inline;
   padding: 1em;
   font-size: 1.5em;
-  color: #1EDEFA;
+  color: #0D910D;
   cursor: pointer;
 }
 
 .character-menu_item:hover {
-  text-decoration: underline;
+  color: #1CE50C;
 }
+
+.character-menu_item.ultimate {
+  color: #CECE00;
+}
+
+.character-menu_item.ultimate:hover {
+  color: #FF0;
+}
+
+.character-menu_item.ultimate.is-disabled {
+  color: #555;
+  pointer-events: none;
+}
+
 
 /* CHARACTER */
 
@@ -149,6 +187,7 @@ main {
   height: 18em;
   position: relative;
   overflow: visible;
+  animation: fadeIn 2s;
 }
 
 .character > div {
@@ -282,6 +321,10 @@ main {
   animation: shadowJump .2s alternate infinite;
 }
 
+.character.is-defeated {
+    animation: fadeOut 2s forwards;
+}
+
 .character.is-defeated .character_arm_image {
   transform: rotate(-75deg);
 }
@@ -314,7 +357,7 @@ main {
 
 @keyframes ready {
   from { transform: rotate(-3deg) translateX(.125em); }
-  to { transform: rotate(3deg) translateX(-.125em); }
+  to   { transform: rotate(3deg) translateX(-.125em); }
 }
 
 @keyframes attack {
@@ -350,4 +393,20 @@ main {
   80%  { transform: rotate(90deg); }
   90%  { transform: rotate(-75deg); }
   100% { transform: rotate(-5deg); }
+}
+
+@keyframes floatAndFade {
+  0%   { top: 0; }
+  60%  { opacity: 1; }
+  100% { opacity: 0; top: -1em;}
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }

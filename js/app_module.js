@@ -21,13 +21,10 @@ class App {
 
     this.linkOpponents();
     this.render();
-    this.startGame();
   }
 
   render() {
     let parts = this.parts;
-
-    this.element.appendChild(parts.stage);
 
     parts.stage.appendChild(parts.battleground);
     parts.stage.appendChild(parts.characterStats);
@@ -42,6 +39,12 @@ class App {
 
     this.addCharacter("left", this.characters.leftCharacter)
       .addCharacter("right", this.characters.rightCharacter);
+
+    this.element.appendChild(parts.stage);
+
+    setTimeout(() => {
+      this.startGame();
+    }, 2000);
   }
 
   linkOpponents() {
@@ -110,10 +113,16 @@ class App {
   }
 
   startGame() {
-    this.updateNarration("Severence check deposited!", true, 3000);
+    this.preloadImages();
+    this.updateNarration("Incoming Severence Check!", true, 3000);
     setTimeout(() => {
       this.characters.rightCharacter.updateHitpoints(18904);
       this.characters.leftCharacter.startTurn();
     },1000);
+  }
+
+  preloadImages() {
+    let i = new Image();
+    i.src = "img/battleground.jpg";
   }
 }

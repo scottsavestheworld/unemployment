@@ -18,6 +18,21 @@ class CharacterMenu {
         });
       }
     }
+    this.parts.ultimate = $$.element("div", "character-menu_item", "ultimate");
+    this.parts.ultimate.addEventListener("click", (e) => {
+      this.owner.doMove(this.owner.props.ultimate);
+      this.owner.props.turnsToUltimate = this.owner.props.turnsForUltimate;
+      e.preventDefault();
+    });
+  }
+
+  updateUltimateCharge(ultimateCharge = this.owner.props.ultimateCharge) {
+    if (ultimateCharge < 100) {
+      this.parts.ultimate.classList.add("is-disabled");
+    } else {
+      this.parts.ultimate.classList.remove("is-disabled");
+    }
+    this.parts.ultimate.innerHTML = `Ultimate (${ultimateCharge}%)`
   }
 
   render() {

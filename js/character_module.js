@@ -11,16 +11,16 @@ class Character {
       mouthState       : "neutral",
       actionState      : "unaware",
       opponent         : null,
-      menuColor        : dataObject.menuColor      || "#888",
-      name             : dataObject.name           || "Unknown Contender",
-      hitpointLabel    : dataObject.hitpointLabel  || "",
-      hitpointPrefix   : dataObject.hitpointPrefix || "",
-      hitpoints        : dataObject.hitpoints      || 1,
-      autoAttack       : dataObject.autoAttack     || false,
-      ultimate         : dataObject.ultimate       || {},
-      turnsForUltimate : dataObject.turnsToUltimate || -1,
-      turnsToUltimate  : dataObject.ultimateReady  || 0,
-      moves            : dataObject.moves          || {}
+      menuColor        : dataObject.menuColor        || "#888",
+      name             : dataObject.name             || "Unknown Contender",
+      hitpointLabel    : dataObject.hitpointLabel    || "",
+      hitpointPrefix   : dataObject.hitpointPrefix   || "",
+      hitpoints        : dataObject.hitpoints        || 1,
+      autoAttack       : dataObject.autoAttack       || false,
+      ultimate         : dataObject.ultimate         || {},
+      ultimateStart    : dataObject.ultimateStart    || null,
+      ultimateCharge   : dataObject.ultimateCharge   || 0,
+      moves            : dataObject.moves            || {}
     };
 
     this.parts = {
@@ -105,7 +105,7 @@ class Character {
       case "battered":
         mouthState = "open";
       case "injured":
-        eyesState = "wincing";
+        eyesState  = "wincing";
         expression = "angry";
         break;
       case "sleeping":
@@ -119,6 +119,10 @@ class Character {
       case "happy" :
       case "victorious":
         mouthState = "laughing";
+        break;
+      case "pathetic":
+        expression = "sexy";
+        mouthState = "sexy";
     }
 
     this.props.eyesState  = eyesState;
@@ -137,7 +141,7 @@ class Character {
     let actionState = this.props.actionState;
     let shouldBlink = actionState !== "injured" && actionState !== "zoned" && actionState !== "battered";
     let eyesState   = isBlinking && shouldBlink ? "closed" : this.props.eyesState;
-    let expression = this.props.expression;
+    let expression  = this.props.expression;
     this.parts.eyes.image.src = `img/${this.id}/eyes_${eyesState}_${expression}.svg`;
   }
 
@@ -146,16 +150,15 @@ class Character {
       this.updateActionState("ready");
       if (this.props.autoAttack) {
         setTimeout(() => {
-          if (this.props.turnsToUltimate > 0) {
-            this.props.turnsToUltimate --;
-          } else if (this.props.turnsToUltimate === 0) {
-            this.doMove(this.props.ultimate);
-            this.props.turnsToUltimate = this.props.turnsForUltimate;
-          } else {
+          if (this.props.ultimateCharge !== 100) {
             this.getRandomMove(this.props.moves.auto.result);
+          } else {
+            this.doMove(this.props.ultimate);
+            this.props.ultimateCharge = this.props.ultimateStart;
           }
         }, 2000);
       } else {
+        this.parts.characterMenu.updateUltimateCharge();
         this.owner.addCharacterMenu(this.parts.characterMenu.element);
       }
     }, 2000);
@@ -175,6 +178,7 @@ class Character {
     this.props.opponent.updateActionState("worried");
     this.owner.removeCharacterMenu(this.parts.characterMenu.element);
     this.updateNarration(move.name, true);
+    this.updateUltimateCharge($$.random(move.ult[0], move.ult[1]));
     setTimeout(() => {
       this.updateHitpoints($$.random(move.restore[0], move.restore[1]));
       this.props.opponent.updateHitpoints(-$$.random(move.damage[0], move.damage[1]));
@@ -190,7 +194,8 @@ class Character {
     this.parts.characterStats.updatePart("hitpoints", this.props.hitpoints);
     if (amount > 0) {
       this.updateActionState("happy");
-    } else if (amount === 0) {
+    }
+    else if (amount === 0) {
       this.updateActionState("neutral")
     } else {
       if (-amount < this.props.hitpoints * .2) {
@@ -198,6 +203,23 @@ class Character {
       } else {
         this.updateActionState("battered");
       }
+    }
+    this.showHitpointChange(amount)
+  }
+
+  updateUltimateCharge(amount) {
+    let ultimateCharge = this.props.ultimateCharge;
+    if (typeof ultimateCharge === "number") {
+      ultimateCharge += amount;
+
+      if (ultimateCharge > 100) {
+        ultimateCharge = 100;
+      }
+      else if (ultimateCharge < 0) {
+        ultimateCharge = 0;
+      }
+      this.props.ultimateCharge = ultimateCharge;
+      this.parts.characterMenu.updateUltimateCharge(ultimateCharge);
     }
   }
 
@@ -228,6 +250,22 @@ class Character {
     this.parts.characterNarration.innerHTML = narrative;
     if (isVisible) {
       this.owner.addNarration(this.parts.characterNarration, duration);
+    }
+  }
+
+  showHitpointChange(amount) {
+    if (amount !== 0) {
+      let secondaryClass = amount > 0 ? "is-adding" : "is-subtracting";
+      let prefix = this.props.hitpointPrefix;
+      if (amount < 0) { amount = -amount }
+      amount = prefix + amount;
+
+      let hitpointChange = $$.element("div", "hitpoint-change", secondaryClass);
+      hitpointChange.innerHTML = amount;
+      this.element.appendChild(hitpointChange);
+      setTimeout(() => {
+        this.element.removeChild(hitpointChange);
+      }, 3000);
     }
   }
 };
