@@ -3,8 +3,8 @@ class App {
     this.element = document.body;
 
     this.characters = {
-      leftCharacter    : new Character(dataObject.leftCharacter),
-      rightCharacter   : new Character(dataObject.rightCharacter),
+      leftCharacter    : new Character(this, dataObject.leftCharacter),
+      rightCharacter   : new Character(this, dataObject.rightCharacter),
     };
 
     this.parts = {
@@ -15,10 +15,7 @@ class App {
       characterStats      : $$.element("section", "character-stats"),
       leftCharacterStats  : $$.element("div", "character-stats_left"),
       rightCharacterStats : $$.element("div", "character-stats_right"),
-      characterMenu       : $$.element("div", "character-menu"),
-      notification        : $$.element("div", "notification"),
-      leftButton          : $$.element("button", "emote-button", "is-left"),
-      rightButton         : $$.element("button", "emote-button")
+      notification        : $$.element("div", "notification")
     };
 
     this.props = {
@@ -27,19 +24,15 @@ class App {
       rightEmoteCount  : 0
     };
 
+    this.linkOpponents();
     this.render();
-    this.addEvents();
+    this.characters.leftCharacter.startTurn();
   }
 
   render() {
     let parts = this.parts;
 
     this.element.appendChild(parts.stage);
-    this.element.appendChild(parts.characterMenu);
-    parts.characterMenu.appendChild(parts.leftButton);
-    parts.characterMenu.appendChild(parts.rightButton);
-    parts.leftButton.innerHTML = "Change Emote";
-    parts.rightButton.innerHTML = "Change Emote";
 
     parts.stage.appendChild(parts.battleground);
     parts.stage.appendChild(parts.characterStats);
@@ -54,24 +47,11 @@ class App {
       .addCharacter("right", this.characters.rightCharacter);
   }
 
-  addEvents() {
-    let leftCharacter   = this.characters.leftCharacter;
-    let rightCharacter  = this.characters.rightCharacter;
-    let leftEmoteCount  = this.props.leftEmoteCount;
-    let rightEmoteCount = this.props.rightEmoteCount;
-
-    this.parts.leftButton.addEventListener("click", function (e) {
-      leftEmoteCount ++;
-      if (leftEmoteCount >= leftCharacter.emotes.length) { leftEmoteCount = 0 }
-      leftCharacter.updateProp("actionState", leftCharacter.emotes[leftEmoteCount]);
-      e.preventDefault();
-    });
-    this.parts.rightButton.addEventListener("click", function (e) {
-      rightEmoteCount ++;
-      if (rightEmoteCount >= rightCharacter.emotes.length) { rightEmoteCount = 0 }
-      rightCharacter.updateProp("actionState", rightCharacter.emotes[rightEmoteCount]);
-      e.preventDefault();
-    });
+  linkOpponents() {
+    if (this.characters.leftCharacter && this.characters.rightCharacter) {
+      this.characters.leftCharacter.props.opponent = this.characters.rightCharacter;
+      this.characters.rightCharacter.props.opponent = this.characters.leftCharacter;
+    }
   }
 
   addCharacter(position, character = {}) {
@@ -83,14 +63,20 @@ class App {
           this.props[`${position}Character`] = character;
         }
         this.parts[`${position}Battleground`].appendChild(character.element);
-        this.parts[`${position}CharacterStats`].appendChild(character.parts.statsBox.element);
+        this.parts[`${position}CharacterStats`].appendChild(character.parts.stats.element);
       }
     }
     return this;
   }
 
-  startTurn(position) {
+  addCharacterMenu(characterMenu) {
+    this.parts.stage.appendChild(characterMenu);
+  }
 
+  removeCharacterMenu(characterMenu) {
+    if (characterMenu.parentNode === this.parts.stage) {
+      this.parts.stage.removeChild(characterMenu);
+    }
   }
 
   updateProp(propName, propValue) {

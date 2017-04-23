@@ -12,9 +12,10 @@ body {
 }
 
 main {
+  position: relative;
   width: 900px;
   margin: 10px auto;
-  background-color: #a1b9ac;
+  background-color: #A1B9AC;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0 0 6px #000;
@@ -25,6 +26,7 @@ main {
 /* BATTLEGROUND */
 
 .battleground {
+  position: relative;
   display: flex;
   height: 400px;
 }
@@ -41,29 +43,31 @@ main {
 }
 
 .character-stats {
+  position: relative;
   display: flex;
   height: 200px;
   background-color: #000;
   border-radius: 10px;
-  padding: .25em;
+  padding: .375em;
   box-shadow: 0 0 0 2px #000;
+  z-index: 5;
 }
 
 .character-stats > div {
   display: flex;
-  flex: 1 0 50%;
+  flex: 1 1 50%;
   align-items: center;
-  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 6px;
 }
 
 .character-stats_left {
-    background-color: #424e56;
-
+  background-color: #424E56;
+  margin-right: .375em;
 }
 
 .character-stats_right {
-    background-color: #0c3550;
+  background-color: #0C3550;
+  margin-left: .375em;
 }
 
 .stats {
@@ -89,6 +93,30 @@ main {
   display: inline;
   color: #FFF;
 }
+
+.character-menu {
+  position: absolute;
+  bottom: 195px;
+  width: 100%;
+  padding: 1em;
+  background-color: #000;
+  text-align: center;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.character-menu_item {
+  display: inline;
+  padding: 1em;
+  font-size: 1.5em;
+  color: #1EDEFA;
+  cursor: pointer;
+}
+
+.character-menu_item:hover {
+  text-decoration: underline;
+}
+
 /* CHARACTER */
 
 .character {
@@ -282,28 +310,4 @@ main {
   80%  { transform: rotate(45deg); }
   90%  { transform: rotate(-45deg); }
   100% { transform: rotate(-5deg); }
-}
-
-.character-menu {
-  text-align: center;
-}
-
-.emote-button {
-  background-color: #79c724;
-  color: #324e12;
-  font-family: 'Londrina Solid', sans-serif;
-  font-size: 40px;
-  display: inline-block;
-  margin: 20px;
-  vertical-align: middle;
-  border: 2px solid #324e12;
-  outline: none;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 2px 2px 4px;
-}
-
-.is-left {
-  background-color: black;
-  color: #cc4f4f;
 }

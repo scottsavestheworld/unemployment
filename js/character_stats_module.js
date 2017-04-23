@@ -1,7 +1,7 @@
 class CharacterStats {
-  constructor(dataObject = {}) {
-    this.id = dataObject.id ? `${dataObject.id}Stats` : `${Date.now()}Stats`;
-    this.element = $$.element("div", "stats", null, this.id);
+  constructor(character) {
+    this.owner = character;
+    this.element = $$.element("div", "stats", null, `${character.id}Stats`);
 
     this.parts = {
       name           : $$.element("div", "stats_name"),
@@ -10,15 +10,6 @@ class CharacterStats {
       hitpointPrefix : $$.element("div", "stats_hitpoint_prefix"),
       hitpoints      : $$.element("div", "stats_hitpoints")
     }
-
-    this.props = {
-      name           : dataObject.name || "Unknown Contender",
-      hitpointLabel  : dataObject.hitpointLabel || "",
-      hitpointPrefix : dataObject.hitpointPrefix || "",
-      hitpoints      : dataObject.hitpoints || 1
-    }
-
-    this.render();
   }
 
   render() {
@@ -31,20 +22,17 @@ class CharacterStats {
     parts.hitpointBox.appendChild(parts.hitpointPrefix);
     parts.hitpointBox.appendChild(parts.hitpoints);
 
-    for (let prop in this.props) {
-      this.updateProp(prop, this.props[prop]);
+    for (let part in this.parts) {
+      if (this.owner.props.hasOwnProperty(part)) {
+        this.updatePart(part, this.owner.props[part]);
+      }
     }
   }
 
-  updateProp(propName, propValue) {
-    if (propName) {
-      if (this.props[propName] !== propValue) {
-        if (this.props.hasOwnProperty(propName)) {
-          this.props[propName] = propValue;
-        }
-      }
-      if (this.parts.hasOwnProperty(propName)) {
-        this.parts[propName].innerHTML = this.props[propName];
+  updatePart(partName, partValue) {
+    if (partName) {
+      if (this.parts.hasOwnProperty(partName)) {
+        this.parts[partName].innerHTML = partValue;
       }
     }
   }

@@ -13,12 +13,12 @@ const CHARACTER_DATA = {
     hitpointPrefix  : "$",
     hitpointLabel   : "Severence",
     autoAttack      : false,
-    special         : { name: "SquareSpace", damage: 9999, action: "attacking" },
-    turnsToSpecial  : 10,
-    specialReady    : false,
+    special         : { name: "SquareSpace", damage: 9999, restore: 0, action: "attacking" },
+    turnsForSpecial : 10,
+    turnsToSpecial  : 7,
     moves         : {
       jobHunt: {
-        title: "Job Hunt", result: [
+        name: "Job Hunt", result: [
           { name: "Distribute Resumes", damage: 2, restore: 0,   action: "attacking" },
           { name: "Talk to Recruiters", damage: 3, restore: 0,   action: "attacking" },
           { name: "Update Portfolio",   damage: 4, restore: 0,   action: "attacking" },
@@ -27,7 +27,7 @@ const CHARACTER_DATA = {
         ]
       },
       sideWork: {
-        title: "Side Work", result: [
+        name: "Side Work", result: [
           { name: "Design a Website",        damage: 1,   restore: 1000, action: "thinking" },
           { name: "Create Graphical Assets", damage: 1,   restore: 500,  action: "thinking" },
           { name: "Creative Writing",        damage: 1,   restore: 200,  action: "thinking" },
@@ -36,7 +36,7 @@ const CHARACTER_DATA = {
         ]
       },
       dink: {
-        title: "Dink", result: [
+        name: "Dink", result: [
           { name: "Play Video Games",  damage: -5, restore: 0,   action: "zoned" },
           { name: "Daydream",          damage: -1, restore: 0,   action: "zoned" },
           { name: "Watch TV",          damage: -2, restore: 0,   action: "zoned" },
@@ -47,25 +47,25 @@ const CHARACTER_DATA = {
     }
   },
   leftCharacter: {
-    id             : "unemployment",
-    name           : "Unemployment",
-    head           : "img/unemployment/head.svg",
-    eyes           : "img/unemployment/eyes_open_focused.svg",
-    mouth          : "img/unemployment/mouth.svg",
-    leftArm        : "img/unemployment/arm.svg",
-    rightArm       : "img/unemployment/arm.svg",
-    body           : "img/unemployment/body.svg",
-    screenPosition : "left",
-    hitpoints      : 365,
-    hitpointPrefix : "",
-    hitpointLabel  : "Days Remaining",
-    autoAttack     : true,
-    special        : { name: "Income Tax", damage: 7339, action: "attacking" },
-    turnsToSpecial : -1,
-    specialReady   : true,
+    id              : "unemployment",
+    name            : "Unemployment",
+    head            : "img/unemployment/head.svg",
+    eyes            : "img/unemployment/eyes_open_focused.svg",
+    mouth           : "img/unemployment/mouth.svg",
+    leftArm         : "img/unemployment/arm.svg",
+    rightArm        : "img/unemployment/arm.svg",
+    body            : "img/unemployment/body.svg",
+    screenPosition  : "left",
+    hitpoints       : 365,
+    hitpointPrefix  : "",
+    hitpointLabel   : "Days Remaining",
+    autoAttack      : true,
+    special         : { name: "Income Tax", damage: 7339, restore: 0, action: "attacking" },
+    turnsForSpecial : -1,
+    turnsToSpecial  : 0,
     moves        : {
       auto: {
-        title: "auto", result: [
+        name: "auto", result: [
           { name: "Mortgage",    damage: 3200, restore: 0, action: "attacking" },
           { name: "Car Loan",    damage: 450,  restore: 0, action: "attacking" },
           { name: "Electricity", damage: 125,  restore: 0, action: "attacking" },
