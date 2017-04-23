@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 54 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g id="Blink" transform="matrix(1,0,0,1,-94.9509,-86.4666)">
+        <path d="M137.501,100.212L137.501,102.626L123.727,102.626L123.727,100.212L137.501,100.212ZM115.501,100.212L115.501,102.626L102.277,102.626L102.277,100.212L115.501,100.212Z"/>
+    </g>
+    <g id="Focused" transform="matrix(1,0,0,1,-94.9509,-86.4666)">
+        <path d="M123.092,94.416L124.737,91.122L142.352,92.192L146.909,97.144C134.369,94.007 128.763,95.066 123.092,94.416ZM116.395,94.28C109.54,93.258 104.172,93.063 96.528,94.478L101.269,90.462L115.475,90.956L116.395,94.28Z"/>
+    </g>
+</svg>

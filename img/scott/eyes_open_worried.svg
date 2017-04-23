@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 54 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g id="Open" transform="matrix(1,0,0,1,-1.21349,2.09984)">
+        <path d="M34.142,6.507C36.547,6.507 38.5,9.891 38.5,14.059C38.5,18.227 36.547,21.611 34.142,21.611C31.736,21.611 29.784,18.227 29.784,14.059C29.784,9.891 31.736,6.507 34.142,6.507ZM16.008,5.195C18.413,5.195 20.366,8.579 20.366,12.747C20.366,16.915 18.413,20.299 16.008,20.299C13.603,20.299 11.65,16.915 11.65,12.747C11.65,8.579 13.603,5.195 16.008,5.195Z"/>
+    </g>
+    <g id="Worried" transform="matrix(1,0,0,1,-94.9509,-86.4666)">
+        <path d="M124.737,91.605L124.737,86.755L141.804,90.431L146.87,96.489C137.791,91.95 130.073,92.584 124.737,91.605ZM116.318,91.031C110.189,91.501 103.855,92.587 96.528,94.478L101.365,90.049L116.491,86.755L116.318,91.031Z"/>
+    </g>
+</svg>

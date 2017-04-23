@@ -1,0 +1,309 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  color: #555;
+  font-weight: 300;
+  font-size: 16px;
+  font-family: 'Londrina Solid', sans-serif;
+}
+
+main {
+  width: 900px;
+  margin: 10px auto;
+  background-color: #a1b9ac;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 6px #000;
+  background: url(../img/battleground.jpg) no-repeat bottom;
+  background-size: cover;
+}
+
+/* BATTLEGROUND */
+
+.battleground {
+  display: flex;
+  height: 400px;
+}
+
+.battleground > div {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.battleground_left {
+  transform: scaleX(-1);
+}
+
+.character-stats {
+  display: flex;
+  height: 200px;
+  background-color: #000;
+  border-radius: 10px;
+  padding: .25em;
+  box-shadow: 0 0 0 2px #000;
+}
+
+.character-stats > div {
+  display: flex;
+  flex: 1 0 50%;
+  align-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+}
+
+.character-stats_left {
+    background-color: #424e56;
+
+}
+
+.character-stats_right {
+    background-color: #0c3550;
+}
+
+.stats {
+  width: 100%;
+  height: 100%;
+  color: #FFF;
+  text-align: center;
+}
+
+.stats_name {
+  padding: .5em;
+  font-size: 2.5em;
+}
+
+.stats_hitpoint-label {
+  font-size: 1.5em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.stats_hitpoint_prefix,
+.stats_hitpoints {
+  font-size: 2em;
+  display: inline;
+  color: #FFF;
+}
+/* CHARACTER */
+
+.character {
+  width: 15em;
+  height: 18em;
+  position: relative;
+  overflow: visible;
+}
+
+.character > div {
+  position: absolute;
+}
+
+.character_head {
+  top: 1.25em;
+  left: 0.5em;
+}
+
+.character_head_image {
+  width: 7.75em;
+  height: 7.75em;
+}
+
+.character_eyes {
+  position: absolute;
+  top: 4em;
+  left: 1.25em;
+}
+
+.character_eyes_image {
+  width: 3.375em;
+  height: 1.5em;
+}
+
+.character_mouth {
+  position: absolute;
+  top: 5.75em;
+  left: 2.5em;
+}
+
+.character_mouth_image {
+  width: 0.625em;
+  height: 0.375em;
+}
+
+.character_arm.left {
+  top: 7.75em;
+  left: 2em;
+}
+
+.character_arm.right {
+  top: 7.75em;
+  left: 0.5em;
+}
+
+.character_arm_image {
+  width: 4.75em;
+  height: 2em;
+  transform: rotate(-5deg);
+  transform-origin: 3.75em 1em;
+  transition: transform .5s;
+}
+
+.character_body {
+  top: 7.5em;
+  left: 2em;
+  width: 4.25em;
+  height: 5.5em;
+  background-image: url(../img/scott/body.svg);
+}
+
+.character_shadow {
+  top: 12.4em;
+  left: 1.5em;
+  height: .75em;
+  width: 6em;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+}
+
+/* CHARACTER STATES */
+
+.character.is-breathing .character_head,
+.character.is-breathing .character_arm {
+  animation: breathe 1s alternate infinite;
+}
+
+.character.is-unaware .character_arm_image {
+  transform: rotate(-45deg);
+  transition: transform .2s;
+}
+
+.character.is-ready .character_arm.left .character_arm_image {
+  animation: ready .5s alternate infinite;
+}
+
+.character.is-ready .character_arm.right .character_arm_image {
+  animation: ready .5s alternate-reverse infinite;
+}
+
+#scott.is-attacking .character_arm.left .character_arm_image {
+  animation: attack 1s;
+}
+
+#scott.is-attacking .character_arm.right .character_arm_image {
+  animation: attack 1s reverse;
+}
+
+#unemployment.is-attacking .character_arm.left .character_arm_image {
+  animation: alternateAttack 1s;
+}
+
+#unemployment.is-attacking .character_arm.right .character_arm_image {
+  animation: alternateAttack 1s reverse;
+}
+
+.character.is-victorious .character_arm_image {
+  transform: rotate(70deg);
+  transition: transform .2s;
+}
+
+.character.is-injured .character_arm.left .character_arm_image {
+  transform: rotate(50deg);
+  transition: transform .2s;
+}
+
+.character.is-thinking .character_arm_image {
+  transform: rotate(75deg);
+  transition: transform .2s;
+}
+
+.character.is-victorious {
+  animation: jump .2s alternate infinite;
+}
+
+.character.is-victorious .character_shadow {
+  animation: shadowJump .2s alternate infinite;
+}
+
+@keyframes breathe {
+  from { transform: translateY(0em); }
+  to { transform: translateY(.125em); }
+}
+
+@keyframes jump {
+  from { transform: translateY(0em); }
+  to { transform: translateY(-.5em); }
+}
+
+@keyframes shadowJump {
+  from { transform: translateY(0em); }
+  to {
+    transform: translateY(.45em);
+    left: 1.25em;
+    width: 6.5em;
+    height: 1em;
+    background-color: rgba(0, 0, 0, 0.275);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.275);
+  }
+}
+
+@keyframes ready {
+  from { transform: rotate(-3deg) translateX(.125em); }
+  to { transform: rotate(3deg) translateX(-.125em); }
+}
+
+@keyframes attack {
+  0%   { transform: rotate(-5deg) translateX(0em); }
+  10%  { transform: rotate(0deg) translateX(.375em); }
+  20%  { transform: rotate(0deg) translateX(-.375em); }
+  30%  { transform: rotate(0deg) translateX(.375em); }
+  40%  { transform: rotate(0deg) translateX(-.375em); }
+  50%  { transform: rotate(0deg) translateX(.375em); }
+  60%  { transform: rotate(0deg) translateX(.375em); }
+  70%  { transform: rotate(0deg) translateX(-.375em); }
+  80%  { transform: rotate(0deg) translateX(.375em); }
+  90%  { transform: rotate(0deg) translateX(-.375em); }
+  100% { transform: rotate(-5deg) translateX(0em); }
+}
+
+@keyframes alternateAttack {
+  0%   { transform: rotate(-5deg); }
+  10%  { transform: rotate(45deg); }
+  20%  { transform: rotate(-45deg); }
+  30%  { transform: rotate(45deg); }
+  40%  { transform: rotate(-45deg); }
+  50%  { transform: rotate(45deg); }
+  60%  { transform: rotate(45deg); }
+  70%  { transform: rotate(-45deg); }
+  80%  { transform: rotate(45deg); }
+  90%  { transform: rotate(-45deg); }
+  100% { transform: rotate(-5deg); }
+}
+
+.character-menu {
+  text-align: center;
+}
+
+.emote-button {
+  background-color: #79c724;
+  color: #324e12;
+  font-family: 'Londrina Solid', sans-serif;
+  font-size: 40px;
+  display: inline-block;
+  margin: 20px;
+  vertical-align: middle;
+  border: 2px solid #324e12;
+  outline: none;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px;
+}
+
+.is-left {
+  background-color: black;
+  color: #cc4f4f;
+}
