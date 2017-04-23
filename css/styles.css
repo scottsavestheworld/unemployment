@@ -23,6 +23,28 @@ main {
   background-size: cover;
 }
 
+/* NARRATION */
+
+.narration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.character-narration,
+.narration_element {
+  display: inline-block;
+  border: 6px solid #000;
+  padding: .5em 1em;
+  font-size: 1.75em;
+  margin-top: .125em;
+  color: #FFF;
+  background-color: #555;
+  border-radius: 10px;
+}
+
 /* BATTLEGROUND */
 
 .battleground {
@@ -41,6 +63,8 @@ main {
 .battleground_left {
   transform: scaleX(-1);
 }
+
+/* CHARACTER STATS*/
 
 .character-stats {
   position: relative;
@@ -61,12 +85,10 @@ main {
 }
 
 .character-stats_left {
-  background-color: #424E56;
   margin-right: .375em;
 }
 
 .character-stats_right {
-  background-color: #0C3550;
   margin-left: .375em;
 }
 
@@ -75,6 +97,7 @@ main {
   height: 100%;
   color: #FFF;
   text-align: center;
+  border-radius: 6px;
 }
 
 .stats_name {
@@ -93,6 +116,8 @@ main {
   display: inline;
   color: #FFF;
 }
+
+/* CHARACTER MENU */
 
 .character-menu {
   position: absolute;
@@ -153,13 +178,13 @@ main {
 
 .character_mouth {
   position: absolute;
-  top: 5.75em;
-  left: 2.5em;
+  top: 6em;
+  left: 2em;
 }
 
 .character_mouth_image {
-  width: 0.625em;
-  height: 0.375em;
+  width: 2em;
+  height: 1em;
 }
 
 .character_arm.left {
@@ -257,6 +282,14 @@ main {
   animation: shadowJump .2s alternate infinite;
 }
 
+.character.is-defeated .character_arm_image {
+  transform: rotate(-75deg);
+}
+
+.character.is-ultimate .character_arm_image {
+  animation: raiseArms 3s;
+}
+
 @keyframes breathe {
   from { transform: translateY(0em); }
   to { transform: translateY(.125em); }
@@ -309,5 +342,12 @@ main {
   70%  { transform: rotate(-45deg); }
   80%  { transform: rotate(45deg); }
   90%  { transform: rotate(-45deg); }
+  100% { transform: rotate(-5deg); }
+}
+
+@keyframes raiseArms {
+  0%   { transform: rotate(-5deg); }
+  80%  { transform: rotate(90deg); }
+  90%  { transform: rotate(-75deg); }
   100% { transform: rotate(-5deg); }
 }

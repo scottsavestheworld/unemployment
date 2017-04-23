@@ -15,18 +15,13 @@ class App {
       characterStats      : $$.element("section", "character-stats"),
       leftCharacterStats  : $$.element("div", "character-stats_left"),
       rightCharacterStats : $$.element("div", "character-stats_right"),
-      notification        : $$.element("div", "notification")
-    };
-
-    this.props = {
-      currentTurn      : "left",
-      leftEmoteCount   : 0,
-      rightEmoteCount  : 0
+      narration           : $$.element("section", "narration"),
+      narrationElement    : $$.element("div", "narration_element")
     };
 
     this.linkOpponents();
     this.render();
-    this.characters.leftCharacter.startTurn();
+    this.startGame();
   }
 
   render() {
@@ -42,6 +37,8 @@ class App {
 
     parts.characterStats.appendChild(parts.leftCharacterStats);
     parts.characterStats.appendChild(parts.rightCharacterStats);
+
+    parts.stage.appendChild(parts.narration);
 
     this.addCharacter("left", this.characters.leftCharacter)
       .addCharacter("right", this.characters.rightCharacter);
@@ -63,10 +60,30 @@ class App {
           this.props[`${position}Character`] = character;
         }
         this.parts[`${position}Battleground`].appendChild(character.element);
-        this.parts[`${position}CharacterStats`].appendChild(character.parts.stats.element);
+        this.parts[`${position}CharacterStats`].appendChild(character.parts.characterStats.element);
       }
     }
     return this;
+  }
+
+  addNarration(narrationElement, duration = 3000) {
+    this.parts.narration.innerHTML = "";
+    this.parts.narration.appendChild(narrationElement);
+    setTimeout(() => {
+      this.removeNarration(narrationElement);
+    }, duration);
+  }
+  removeNarration(narrationElement) {
+    if (narrationElement.parentNode === this.parts.narration) {
+      this.parts.narration.removeChild(narrationElement);
+    }
+  }
+
+  updateNarration(narrative, isVisible, duration) {
+    this.parts.narrationElement.innerHTML = narrative;
+    if (isVisible) {
+      this.addNarration(this.parts.narrationElement, duration);
+    }
   }
 
   addCharacterMenu(characterMenu) {
@@ -90,5 +107,13 @@ class App {
         this.parts[propName].innerHTML = this.props[propName];
       }
     }
+  }
+
+  startGame() {
+    this.updateNarration("Severence check deposited!", true, 3000);
+    setTimeout(() => {
+      this.characters.rightCharacter.updateHitpoints(18904);
+      this.characters.leftCharacter.startTurn();
+    },1000);
   }
 }
