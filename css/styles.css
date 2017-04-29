@@ -1,3 +1,8 @@
+@font-face {
+    font-family: CP437;
+    src: url(../fonts/CP437.ttf);
+}
+
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -22,6 +27,43 @@ main {
   box-shadow: 0 0 0 6px #000;
   background: url(../img/battleground.jpg) no-repeat bottom;
   backgrou-dnd-size: cover;
+}
+
+/* PREGAME SCREEN */
+
+.pre-game {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  padding: 32px;
+  font-family: CP437, monospace;
+  font-size: 24px;
+  color: #0D0;
+  background-color: #000;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+.pre-game.is-fading-out {
+  opacity: 0;
+}
+
+.pre-game_greeting {
+  padding-bottom: 16px;
+}
+
+.pre-game_input {
+  display: inline;
+  width: 500px;
+  color: #FFF;
+  font-family: CP437, monospace;
+  font-size: 24px;
+  background-color: #000;
+  border: none;
+  outline: none;
 }
 
 /* HITPOINT CHANGE */

@@ -14,7 +14,7 @@ const CHARACTER_DATA = {
     hitpointPrefix     : "$",
     hitpointLabel      : "Savings",
     autoAttack         : false,
-    ultimate           : { name: "SQUARESPACE", damage: [9999, 9999], restore: [0, 0], action: "ultimate", duration: 3000, ult: [0,0] },
+    ultimate           : { name: "YOUR COMPANY", damage: [9999, 9999], restore: [0, 0], action: "ultimate", duration: 3000, ult: [0,0] },
     ultimateStart      : 0,
     ultimateCharge     : 0,
     moves         : {

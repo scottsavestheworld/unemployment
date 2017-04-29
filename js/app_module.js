@@ -16,11 +16,20 @@ class App {
       leftCharacterStats  : $$.element("div", "character-stats_left"),
       rightCharacterStats : $$.element("div", "character-stats_right"),
       narration           : $$.element("section", "narration"),
-      narrationElement    : $$.element("div", "narration_element")
+      narrationElement    : $$.element("div", "narration_element"),
+      preGameScreen       : $$.element("section", "pre-game"),
+      preGameGreeting     : $$.element("div", "pre-game_greeting"),
+      preGameInputPrefix  : $$.element("span", "pre-game_input-prefix"),
+      preGameInput        : $$.element("input", "pre-game_input")
     };
 
     this.linkOpponents();
     this.render();
+    this.typeText("Please enter your company's name and press ENTER...", this.parts.preGameGreeting)
+      .then(this.initializeGame)
+      .catch(function(error){
+        console.log("Error: ", error);
+      });
   }
 
   render() {
@@ -28,6 +37,7 @@ class App {
 
     parts.stage.appendChild(parts.battleground);
     parts.stage.appendChild(parts.characterStats);
+    parts.stage.appendChild(parts.preGameScreen);
 
     parts.battleground.appendChild(parts.leftBattleground);
     parts.battleground.appendChild(parts.rightBattleground);
@@ -42,9 +52,7 @@ class App {
 
     this.element.appendChild(parts.stage);
 
-    setTimeout(() => {
-      this.startGame();
-    }, 2000);
+    parts.preGameScreen.appendChild(parts.preGameGreeting);
   }
 
   linkOpponents() {
@@ -112,6 +120,26 @@ class App {
     }
   }
 
+  initializeGame(thisApp) {
+    thisApp.parts.preGameScreen.appendChild(thisApp.parts.preGameInputPrefix);
+    thisApp.parts.preGameScreen.appendChild(thisApp.parts.preGameInput);
+    thisApp.parts.preGameInputPrefix.innerHTML = ">";
+    thisApp.parts.preGameInput.focus();
+
+    thisApp.parts.preGameInput.addEventListener("keydown", (e) => {
+      if (e.keyCode === 13) {
+        let inputValue = thisApp.parts.preGameInput.value || "Your Company";
+        thisApp.parts.preGameInput.blur();
+        thisApp.characters.rightCharacter.props.ultimate.name = inputValue.toUpperCase();
+        thisApp.parts.preGameScreen.classList.add("is-fading-out");
+        setTimeout(() => {
+          thisApp.startGame();
+          thisApp.parts.stage.removeChild(thisApp.parts.preGameScreen);
+        }, 2000);
+      }
+    });
+  }
+
   startGame() {
     this.preloadImages();
     this.updateNarration("Incoming Severence Check!", true, 3000);
@@ -124,5 +152,29 @@ class App {
   preloadImages() {
     let i = new Image();
     i.src = "img/battleground.jpg";
+  }
+
+  typeText(message, container) {
+    let thisApp = this;
+    return new Promise((resolve, reject) => {
+      let text         = $$.string(message);
+      let textLength   = text.length;
+      let currentText  = "";
+      let currentIndex = 0;
+
+      function addCharacter() {
+        if (currentIndex !== textLength) {
+          setTimeout(() => {
+            container.innerHTML = currentText = (currentText + text[currentIndex]);
+            currentIndex ++;
+            addCharacter();
+          }, $$.random(10, 40));
+        } else {
+          resolve(thisApp);
+        }
+      }
+
+      addCharacter();
+    });
   }
 }
